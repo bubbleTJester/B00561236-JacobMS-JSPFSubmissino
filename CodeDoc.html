@@ -1,0 +1,102 @@
+<h1 id="code-documentation-for-element-5">Code Documentation for Element
+    5</h1>
+    <p>Includes: * Arc Rotate Camera * Mesh cloning * Physics objects * GUI
+    with scene transitions and Buttons * Movable object with keyboard input
+    – – – – – – – – – – – – – – – – # MenuScene.ts # Creates the main menu
+    scene</p>
+    <h1 id="createscenebutton">createSceneButton</h1>
+    <h1
+    id="purpose-creates-gui-button-to-allow-the-user-to-access-two-other-scenes-this-is-used-elsewhere-for-other-purposes-however-since-they-are-almost-identical-i-wont-mention-them-individually">Purpose:
+    Creates GUI button to allow the user to access two other scenes (This is
+    used elsewhere for other purposes, however since they are almost
+    identical, I won’t mention them individually)</h1>
+    <pre class="typescript"><code>function createSceneButton(scene: Scene, name: string, index: string, x: string, y: string, advtex, sceneName: int,){
+       var button = GUI.Button.CreateSimpleButton(name, index);
+       button.left = x;
+       button.top = y;
+       button.width = &quot;160px&quot;
+       button.height = &quot;60px&quot;;
+       button.color = &quot;white&quot;;
+       button.cornerRadius = 20;
+       button.background = &quot;green&quot;;
+       const buttonClick = new Sound(&quot;MenuClickSFX&quot;, &quot;./audio/menu-click.wav&quot;, scene, null, {
+        loop: false,
+        autoplay: false,
+       });
+       button.onPointerUpObservable.add(function() {
+       buttonClick.play();
+       setSceneIndex(sceneName);
+       });
+       advtex.addControl(button);
+       return button;
+      } </code></pre>
+    <h1 id="options.ts">Options.ts</h1>
+    <h1
+    id="re-used-file-from-element-4.-uses-exclusively-buttons-which-have-already-been-mentioned.-all-of-the-buttons-play-sounds-from-the-cartoon-show-ed-edd-n-eddy">Re-used
+    file from Element 4. Uses exclusively buttons, which have already been
+    mentioned. All of the buttons play sounds from the cartoon show “Ed, Edd
+    ‘n’ Eddy”</h1>
+    <h1 id="gamescene.ts">GameScene.ts</h1>
+    <h1
+    id="a-small-physics-playground-used-to-play-around-with-the-havok-physics-engine">A
+    small Physics playground used to play around with the havok physics
+    engine</h1>
+    <h1 id="screentext">ScreenText</h1>
+    <h1
+    id="purpose-creates-gui-text-to-tell-the-player-how-they-can-spin-the-blade">Purpose:
+    Creates GUI text to tell the player how they can spin the “blade”</h1>
+    <pre class="typescript"><code>async function ScreenText(scene: Scene, textName: string, words: string, advtex) // I have no idea what an async function is but the code doesn&#39;t work without it so I&#39;m keeping it until it breaks something
+    {
+      var text = new GUI.TextBlock(textName, words);
+      text.left = &quot;0px&quot;;
+      text.top = &quot;240px&quot;;
+      text.width = &quot;240px&quot;;
+      text.height = &quot;60px&quot;;
+      text.color = &quot;white&quot;;
+      text.fontSize = 16;
+      advtex.addControl(text);
+    
+      return text;
+    }</code></pre>
+    <h1 id="createbox-clonebox-createsphere-clonesphere">CreateBox,
+    CloneBox, CreateSphere, CloneSphere</h1>
+    <h1
+    id="purpose-creates-example-objects-to-be-cloned-into-objects-with-physics-properties">Purpose:
+    Creates example objects to be cloned into objects with physics
+    properties</h1>
+    <pre class="typescript"><code>//droppables and Ground
+    function CreateBox(scene, x, y, z){
+      let box: Mesh = MeshBuilder.CreateBox(&quot;box&quot;, scene);
+      box.position.x = x;
+      box.position.y = y;
+      box.position.z = z;
+      
+      return box;
+     }
+    //Clone box
+    function CloneBox(scene: Scene, Cloned: Mesh){
+      const clone = Cloned.clone(&quot;Box clone&quot;);
+      const boxAggregate = new PhysicsAggregate(clone, PhysicsShapeType.BOX, { mass: 10 }, scene);
+      return clone;
+    }
+    function CreateSphere(scene, x, y, z){
+      let sphere: Mesh = MeshBuilder.CreateSphere(&quot;sphere&quot;, scene);
+      sphere.position.x = x;
+      sphere.position.y = y;
+      sphere.position.z = z;
+      
+      return sphere;
+     }
+    //Clone Sphere
+    function CloneSphere(scene: Scene, Cloned: Mesh){
+      const clone = Cloned.clone(&quot;Sphere clone&quot;);
+      const boxAggregate = new PhysicsAggregate(clone, PhysicsShapeType.SPHERE, { mass: 10 }, scene);
+      return clone;
+    }
+     //----
+     function CreateGround(scene: Scene) {
+      const ground: Mesh = MeshBuilder.CreateGround(&quot;ground&quot;, {height: 40, width: 40, subdivisions: 4});
+      const groundAggregate = new PhysicsAggregate(ground, PhysicsShapeType.BOX, { mass: 0 }, scene);
+      return ground;
+     }</code></pre>
+    <h1 id="end-of-code-documentation">End of Code Documentation</h1>
